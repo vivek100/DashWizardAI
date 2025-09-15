@@ -1,0 +1,28 @@
+{
+  "enabled": true,
+  "name": "Documentation Sync",
+  "description": "Listens to source code changes and updates documentation in README or docs folder accordingly",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "Ver0.2/**/*.py",
+      "Ver0.2/**/*.js",
+      "Ver0.2/**/*.ts",
+      "Ver0.2/**/*.jsx",
+      "Ver0.2/**/*.tsx",
+      "Ver0.2/package.json",
+      "Ver0.2/requirements.txt",
+      "Ver0.2/setup.py",
+      "Ver0.2/langgraph.json",
+      "Ver0.21/**/*.js",
+      "Ver0.21/**/*.ts",
+      "Ver0.21/**/*.jsx",
+      "Ver0.21/**/*.tsx"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Source code files have been modified. Please review the changes and update the documentation accordingly. Check if the README.md files need updates to reflect new features, API changes, or usage instructions. If there are dedicated docs folders, update those as well. Focus on keeping documentation accurate and up-to-date with the current codebase."
+  }
+}
