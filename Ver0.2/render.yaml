@@ -1,0 +1,46 @@
+databases:
+  - name: langgraph-postgres
+    databaseName: langgraph
+    user: langgraph
+    plan: free
+
+services:
+  - type: redis
+    name: langgraph-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
+
+  - type: web
+    name: langgraph-api
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    envVars:
+      - key: REDIS_URI
+        fromService:
+          type: redis
+          name: langgraph-redis
+          property: connectionString
+      - key: DATABASE_URI
+        fromDatabase:
+          name: langgraph-postgres
+          property: connectionString
+      - key: LANGSMITH_API_KEY
+        sync: false
+      - key: LANGSMITH_TRACING
+        sync: false
+      - key: LANGSMITH_PROJECT
+        sync: false
+      - key: LANGSMITH_ENDPOINT
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+    healthCheckPath: /ok 
